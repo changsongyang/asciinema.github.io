@@ -154,7 +154,7 @@ asciinema server utilizes a PostgreSQL database for storing recording metadata
 and user account information, among other data.
 
 The `DATABASE_URL` environment variable configures the database connection. It
-use the standard format of
+uses the standard format of
 `postgresql://username:password@hostname:port/dbname`. Port number can be
 ommited when connecting to the standard PostgreSQL port 5432.
 
