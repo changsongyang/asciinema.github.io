@@ -4,7 +4,10 @@ To upgrade your instance of asciinema server to the latest version:
 
 - check the [releases](https://github.com/asciinema/asciinema-server/releases)
   for the latest version number
-- read the release notes carefully, and follow the upgrade instructions
+- check the release notes of _all_ versions between the one you're running and
+  the one you're upgrading to, and look for manual upgrade steps and breaking
+  changes for each version - if there are manual steps you omit you may end up
+  with a broken installation,
 - update the `asciinema` container image tag to the latest number
 - recreate the stack by running `docker compose up -d`
 
