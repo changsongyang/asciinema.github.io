@@ -330,14 +330,14 @@ information on obtaining the account ID and the access key.
 
 ## Email
 
-asciinema server needs an SMTP server to deliver emails containing short-lived
-login links.
+asciinema server needs an email server/service to deliver emails containing
+short-lived login links.
 
-When no SMTP server is configured (default), no mail is sent. However, you can
-obtain a login link from the server container logs after entering your email
-address on the login page. Search for a line containing `Asciinema.Emails.Job`,
-and open the URL found on that line in the browser. This is fine for testing, or
-a single-user server, but for a multi-user setup SMTP is necessary.
+When no SMTP server is configured, no mail is sent. However, you can obtain a
+login link from the server container logs after entering your email address on
+the login page. Search for a line containing a URL, and open that URL in a
+browser. This is fine for testing, or a single-user server, but for a multi-user
+setup SMTP is necessary.
 
 SMTP settings are configured with `SMTP_*` set of environment variables. The
 main ones are `SMTP_HOST`, `SMTP_USERNAME` and `SMTP_PASSWORD`.
@@ -361,16 +361,19 @@ Here's a complete list of available SMTP settings:
 - `SMTP_PORT` - defaults to 587
 - `SMTP_USERNAME` - usually required by the SMTP server
 - `SMTP_PASSWORD` - usually required by the SMTP server
-- `SMTP_FROM_ADDRESS` - address for the `From` header, defaults to `hello@$URL_HOST`
-- `SMTP_REPLY_TO_ADDRESS` - address for the `Reply-To` header, defaults to `admin@$URL_HOST`
 - `SMTP_TLS` - set to `always`, `never` or `if_available`, defaults to `if_available`
 - `SMTP_ALLOWED_TLS_VERSIONS` - set allowed TLS versions, defaults to `tlsv1,tlsv1.1,tlsv1.2`
 - `SMTP_AUTH` - set to `always` or `if_available`, defaults to `if_available`
 - `SMTP_NO_MX_LOOKUPS` - set to `true` to disable MX lookups and connect directly to the server of receipient's domain
 
+Additionally, following variables can be used to adjust the mail headers:
+
+- `MAIL_FROM_ADDRESS` - address for the `From` header, defaults to `hello@$URL_HOST`
+- `MAIL_REPLY_TO_ADDRESS` - address for the `Reply-To` header, defaults to `admin@$URL_HOST`
+
 Below you'll find example SMTP configurations for selected providers.
 
-You can test SMTP configuration by sending a test email using the following
+You can test your configuration by sending a test email using the following
 command:
 
 ```sh
