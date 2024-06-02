@@ -66,6 +66,7 @@ class="email">donations@asci<b>inema.org</b>inema.org</span>.
 Shout-out to asciinema's current sponsors:
 
 - [Brightbox](https://www.brightbox.com/)
+- [DataDog](https://datadoghq.com/)
 
 ## Consulting
 
