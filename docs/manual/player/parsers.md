@@ -1,7 +1,7 @@
 # Parsers
 
 Parser is a function, which transforms a recording encoded in an arbitrary file
-format into a simple object representing terminal recording. Once the player
+format into a simple object representing a terminal recording. Once the player
 fetches a file, it runs its contents through a parser, which turns it into a
 recording object used by the player's [recording
 driver](https://github.com/asciinema/asciinema-player/blob/develop/src/driver/recording.js).
