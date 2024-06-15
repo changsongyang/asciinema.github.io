@@ -120,20 +120,21 @@ Type: string
 
 Terminal color theme.
 
-See [Terminal themes](themes.md) for a list of available built-in themes, and
-how to use a custom theme.
+[asciinema CLI](../cli/index.md) 3.0 (and later) captures original terminal
+theme and [embeds it in a recording
+file](https://docs.asciinema.org/manual/asciicast/v2/#theme). This lets the
+player replicate the exact colors by default.
 
-If this options is not specified, the player uses the original (recorded) theme
-when available; otherwise, it uses the `asciinema` theme.
+This option can be used to override the terminal theme. See [Terminal
+themes](themes.md) for a list of available built-in themes (also how to use a
+custom theme).
 
-!!! note
+If you'd like to configure the player to use the original theme when available,
+falling back to a specific theme, e.g. `dracula`, then prefix the theme name
+with `auto/`. For example: `{ theme: "auto/dracula" }`.
 
-    Capture of the original terminal theme is performed by [asciinema
-    CLI](../cli/index.md) since version 3.0. For existing recordings in
-    [asciicast v2 format](https://docs.asciinema.org/manual/asciicast/v2/), you
-    can embed a theme manually by adding the [`theme`
-    entry](https://docs.asciinema.org/manual/asciicast/v2/#theme) to the header
-    line of a recording file.
+Defaults to `"auto/asciinema"` since player v3.8, and to `"asciinema"` in
+earlier versions.
 
 ### `poster`
 
