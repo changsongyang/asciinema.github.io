@@ -180,9 +180,9 @@ Defaults to either:
 !!! warning
 
     Setting `cols` to a value smaller then the one from the original recording
-    may break the rendering of sessions including "full screen" programs like
+    may break the rendering of sessions containing "full screen" programs like
     `vim`, `htop` or `less`. It's usually safe to override `cols` for recordings
-    containing basic command execution in a shell.
+    of basic command execution in a shell.
 
 ### rows
 
