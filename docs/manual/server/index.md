@@ -18,9 +18,10 @@ virtual terminal, [avt](https://github.com/asciinema/avt), to perform tasks such
 as preview generation and recording analysis.
 
 [asciinema.org](https://asciinema.org) is a public asciinema server instance
-managed by the asciinema team, offering free hosting for terminal recordings,
-available to everyone. Check [asciinema.org/about](https://asciinema.org/about)
-to learn more about this instance.
+managed by the asciinema project team, offering free hosting for terminal
+recordings, available to everyone. Check
+[asciinema.org/about](https://asciinema.org/about) to learn more about this
+instance.
 
 You can easily [self-host asciinema server](self-hosting/index.md) and use the
 [asciinema CLI](../cli/index.md) with your own instance. If you're not
