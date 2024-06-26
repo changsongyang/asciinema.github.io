@@ -93,7 +93,7 @@ uploading of recordings and live streaming.
 This value can also be set in the config file as `server.url`.
 
 If you [self-host asciinema server](../server/self-hosting/index.md) then you
-should set `ASCIINEMA_SERVER_URL` to its base URL, e.g.
+should set the server URL to its base URL, e.g.
 `https://asciinema.example.com`.
 
 ### `ASCIINEMA_CONFIG_HOME`
