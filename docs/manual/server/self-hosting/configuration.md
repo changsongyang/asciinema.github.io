@@ -107,6 +107,14 @@ A typical use-case for disabling signup is a personal server. After creating a
 user account for yourself, you can lock the server down, effectively making it a
 single-user asciinema server.
 
+### Avatars
+
+User avatars are automatically generated based on user email. By default
+[identicon](https://en.wikipedia.org/wiki/Identicon)-like avatars are used.
+
+If you prefer to use [Gravatar](https://gravatar.com) then set
+`DEFAULT_AVATAR=gravatar`.
+
 ### Admin contact email
 
 When setting up a public instance of asciinema server, it's advised to set
