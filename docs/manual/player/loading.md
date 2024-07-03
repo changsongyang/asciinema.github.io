@@ -10,7 +10,7 @@ By default the player doesn't fetch a recording upon initialization, postponing
 the loading until user starts the playback. Given how small (in terms of
 filesize) terminal recordings are this usually is perfectly fine. However, if
 you wish so you can force the player to preload the recording upon its
-initialization using [preload option](options.md#preload):
+initialization using the [preload option](options.md#preload):
 
 ```javascript
 AsciinemaPlayer.create(src, containerElement, { preload: true });
