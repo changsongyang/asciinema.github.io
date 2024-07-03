@@ -342,4 +342,4 @@ See
 [ttyrec.js](https://github.com/asciinema/asciinema-player/blob/develop/src/parser/ttyrec.js)
 or
 [typescript.js](https://github.com/asciinema/asciinema-player/blob/develop/src/parser/typescript.js)
-as examples of binary parsers.
+for examples of binary parsers.
