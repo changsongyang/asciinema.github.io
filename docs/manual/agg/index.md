@@ -26,7 +26,7 @@ Notable features:
 - multiple built-in color themes, ability to use a custom theme,
 - font family and font size customization,
 - adjustable animation speed,
-- emoji support (mono).
+- emoji support.
 
 ---
 

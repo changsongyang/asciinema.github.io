@@ -76,17 +76,14 @@ agg --font-family "JetBrainsMono Nerd Font Mono" demo.cast demo.gif
 
 ## Emoji
 
-Currently agg supports only monochrome emojis via [Noto Emoji
-font](https://fonts.google.com/noto/specimen/Noto+Emoji).
+agg supports emojis when either [Noto Color
+Emoji](https://github.com/googlefonts/noto-emoji) or [Noto
+Emoji](https://fonts.google.com/noto/specimen/Noto+Emoji) font is installed. The
+default renderer, `resvg`, supports color emojis, while `fontdue` renderer only
+supports monochrome emojis.
 
 Install Noto Emoji font on your system or, point agg to a folder containing
-`NotoEmoji-*.ttf` files with `--font-dir`.
-
-Note that [Noto Color Emoji
-font](https://fonts.google.com/noto/specimen/Noto+Color+Emoji) is not supported.
-Be aware that [some
-distros](https://archlinux.org/packages/extra/any/noto-fonts-emoji/) ship this
-color font by name like "noto-fonts-emoji". This is _not_ what you need.
+`NotoColorEmoji.ttf` or `NotoEmoji-*.ttf` files with `--font-dir`.
 
 ## Color themes
 
