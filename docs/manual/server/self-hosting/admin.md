@@ -5,25 +5,21 @@ hide:
 
 # Administration
 
-asciinema server admins can perform the following administrative tasks:
+asciinema server provides admin panel on port 4002, separate from the main,
+user-facing web interface.
 
-- edit metadata and delete any recording
-- add a recording to a "Featured" list
-- change visibility of a recording to public/private
+To be able to access the admin panel when deploying the container make sure
+this port is exposed.
 
-There's no dedicated admin section - you can perform the above tasks through the
-Settings menu (gear icon) on a recording page. The menu can be found below the
-player, on the right side of the page.
-
-To make yourself or another user an admin, run the following command with the
-account's email address:
-
-```sh
-docker compose exec asciinema admin_add email@example.com
+```yaml title="docker-compose.yml"
+services:
+  asciinema:
+    ports:
+      - '4002:4002'
 ```
 
-Similarly, to remove admin role from a user, run:
+!!! danger
 
-```sh
-docker compose exec asciinema admin_rm email@example.com
-```
+    At the moment the admin endpoint doesn't perform any form of
+    authentication/authorization so do not expose this port directly to the
+    internet when running a public asciinema server instance.
