@@ -267,6 +267,22 @@ S3](https://aws.amazon.com/s3/), [Cloudflare
 R2](https://www.cloudflare.com/developer-platform/r2/), or a self-hosted
 [MinIO](https://min.io) server.
 
+Uploaded recordings are saved at a path specified by `UPLOAD_PATH_TPL`
+environment variable, which defaults to
+`recordings/{username}/{year}/{month}/{day}/{id}.{ext}`. If you prefer a
+different directory structure then set this variable. The following
+placeholders are supported:
+
+- `{id}` - numerical (native) ID of a recording
+- `{username}` - username of the recording's author
+- `{shard}` - 2 level deep directory shard based on numerical ID of a recording
+- `{ext}` - recording file extension, `cast` for asciicast v2 and v3, `json` for asciicast v1
+- `{year}`, `{month}`, `{day}` - current date
+
+Changing the value of `UPLOAD_PATH_TPL` when you have existing recordings is
+safe. The server automatically migrates the files to their new locations via a
+background job, which runs daily.
+
 ### Local filesystem
 
 With the local filesystem used as the file store, the files are saved in
