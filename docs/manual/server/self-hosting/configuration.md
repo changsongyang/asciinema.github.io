@@ -127,35 +127,6 @@ you when facing issues.
 
 [Here](https://asciinema.org/about) is one on asciinema.org.
 
-### Upload size limit
-
-The default size limit for the uploaded recordings is 8 MB. This can be raised
-by setting `UPLOAD_SIZE_LIMIT` variable to the desired limit, in bytes. For
-example, `UPLOAD_SIZE_LIMIT=16000000` changes the limit to 16 MB.
-
-### Unclaimed recordings removal
-
-When a recording is uploaded with [`asciinema
-upload`](../../cli/usage.md#asciinema-upload-filename) from a new system, it's
-not linked to any user account, unless [`asciinema
-auth`](../../cli/usage.md#asciinema-auth) was used to authenticate the CLI with
-the server (either before or after the upload). By default, such "unclaimed"
-recordings, are kept forever on a self-hosted asciinema server.
-
-To enable automatic "garbage collection" for unclaimed recordings, use
-`UNCLAIMED_RECORDING_TTL` variable, set to the number of days after which each
-unclaimed recording should be deleted. For example, `UNCLAIMED_RECORDING_TTL=30`
-tells the server to keep every unclaimed recording for up to 30 days, and after
-that, delete it permanently.
-
-Setting `UNCLAIMED_RECORDING_TTL` to a tuple, e.g.
-`UNCLAIMED_RECORDING_TTL=7,30`, where the first number (`7`) is a TTL for
-soft-deletion and the second number (`30`) is a TTL for hard (permanent)
-deletion, enables a 2-step removal process. In this mode, the recording is
-marked as deleted and hidden after the soft-deletion TTL period (7 days in this
-example). Then, after the hard-deletion TTL period (30 days in this example),
-it's permanently deleted from the database and the filesystem/object store.
-
 ## Database
 
 asciinema server utilizes a PostgreSQL database for storing recording metadata
@@ -266,22 +237,6 @@ use any S3-compatible object store, such as [AWS
 S3](https://aws.amazon.com/s3/), [Cloudflare
 R2](https://www.cloudflare.com/developer-platform/r2/), or a self-hosted
 [MinIO](https://min.io) server.
-
-Uploaded recordings are saved at a path specified by `UPLOAD_PATH_TPL`
-environment variable, which defaults to
-`recordings/{username}/{year}/{month}/{day}/{id}.{ext}`. If you prefer a
-different directory structure then set this variable. The following
-placeholders are supported:
-
-- `{id}` - numerical (native) ID of a recording
-- `{username}` - username of the recording's author
-- `{shard}` - 2 level deep directory shard based on numerical ID of a recording
-- `{ext}` - recording file extension, `cast` for asciicast v2 and v3, `json` for asciicast v1
-- `{year}`, `{month}`, `{day}` - current date
-
-Changing the value of `UPLOAD_PATH_TPL` when you have existing recordings is
-safe. The server automatically migrates the files to their new locations via a
-background job, which runs daily.
 
 ### Local filesystem
 
@@ -552,6 +507,119 @@ services:
 
 With `URL_SCHEME=https`, a default HTTPS port 443 is assumed. If you need to use
 another port, use `URL_PORT` variable, e.g `URL_PORT=8443`.
+
+## Uploads
+
+### Authentication
+
+By default uploading with [`asciinema
+upload`](../../cli/usage.md#asciinema-upload-filename) doesn't require
+authentication via [`asciinema auth`](../../cli/usage.md#asciinema-auth),
+meaning anyone can upload new recordings. This is useful in trusted
+environments, such as private LANs/homelabs. If you run a public asciinema
+server instance, or prefer to disable unauthenticated uploads for other
+reasons, then set `UPLOAD_AUTH_REQUIRED=true`.
+
+### Recording visibility
+
+Recording visibility for newly uploaded recordings is inherited from user-level
+"Recording visibility" setting. It can be changed for every recording
+individually at any time.
+
+The default for user's "Recording visibility" setting is Unlisted. This default
+can be changed with `DEFAULT_RECORDING_VISIBILITY` environment variable, which
+accepts either `public`, `unlisted`, `private`.
+
+### Upload path template
+
+Uploaded recordings are saved in the [file store](#file-store) at a path
+specified by `UPLOAD_PATH_TPL` environment variable, which defaults to
+`recordings/{username}/{year}/{month}/{day}/{id}.{ext}`. If you prefer a
+different directory structure then set this variable. The following
+placeholders are supported:
+
+- `{id}` - numerical (native) ID of a recording
+- `{username}` - username of the recording's author
+- `{shard}` - 2 level deep directory shard based on numerical ID of a recording
+- `{ext}` - recording file extension, `cast` for asciicast v2 and v3, `json` for asciicast v1
+- `{year}`, `{month}`, `{day}` - current date
+
+Changing the value of `UPLOAD_PATH_TPL` when you have existing recordings is
+safe. The server automatically migrates the files to their new locations via a
+background job, which runs daily.
+
+### Upload size limit
+
+The default size limit for the uploaded recordings is 8 MB. This can be raised
+by setting `UPLOAD_SIZE_LIMIT` variable to the desired limit, in bytes. For
+example, `UPLOAD_SIZE_LIMIT=16000000` changes the limit to 16 MB.
+
+### Unclaimed recordings removal
+
+When a recording is uploaded with [`asciinema
+upload`](../../cli/usage.md#asciinema-upload-filename) from a new system, it's
+not linked to any user account, unless [`asciinema
+auth`](../../cli/usage.md#asciinema-auth) was used to authenticate the CLI with
+the server (either before or after the upload). By default, such "unclaimed"
+recordings, are kept forever on a self-hosted asciinema server.
+
+To enable automatic "garbage collection" for unclaimed recordings, use
+`UNCLAIMED_RECORDING_TTL` variable, set to the number of days after which each
+unclaimed recording should be deleted. For example, `UNCLAIMED_RECORDING_TTL=30`
+tells the server to keep every unclaimed recording for up to 30 days, and after
+that, delete it permanently.
+
+Setting `UNCLAIMED_RECORDING_TTL` to a tuple, e.g.
+`UNCLAIMED_RECORDING_TTL=7,30`, where the first number (`7`) is a TTL for
+soft-deletion and the second number (`30`) is a TTL for hard (permanent)
+deletion, enables a 2-step removal process. In this mode, the recording is
+marked as deleted and hidden after the soft-deletion TTL period (7 days in this
+example). Then, after the hard-deletion TTL period (30 days in this example),
+it's permanently deleted from the database and the filesystem/object store.
+
+## Streaming
+
+Live streaming feature is enabled by default for all users.
+
+You can disable streaming for each user individually in the [admin
+panel](admin.md).
+
+If you'd rather disable streaming for everyone by default then set
+`DEFAULT_STREAMING_ENABLED=false`. Changing this doesn't affect existing users
+though, so you may still want to turn streaming off manually for each existing
+user.
+
+### Stream recording
+
+asciinema server can automatically save every live stream into a regular recording.
+
+This behaviour is controlled via `STREAM_RECORDING` environment variable, which
+accepts the following values:
+
+- `allowed` (default) - let each user control whether recording is enabled/disabled
+- `forced` - always record every stream, disables user-level control
+- `disabled` - disable stream recording system-wide
+
+### Stream visibility
+
+Stream visibility for newly created streams is inherited from user-level
+"Stream visibility" setting. It can be changed for every stream individually at
+any time.
+
+The default for user's "Stream visibility" setting is Unlisted. This default
+can be changed with `DEFAULT_STREAM_VISIBILITY` environment variable, which
+accepts either `public`, `unlisted`, `private`.
+
+### Stream limit
+
+By default, there's no limit to the number of streams a user can have. 
+
+You can set a limit for each user individually in the [admin panel](admin.md).
+
+If you'd rather set a stream limit for everyone by default then set
+`DEFAULT_STREAM_LIMIT` to the maximum number of streams. Changing this doesn't
+affect existing users though, so you may still want to update the limit
+manually for each existing user.
 
 ## Advanced configuration
 
