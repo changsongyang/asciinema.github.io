@@ -92,6 +92,7 @@ nav:
       - manual/agg/installation.md
       - manual/agg/usage.md
     - FILE FORMAT:
+      - manual/asciicast/v3.md
       - manual/asciicast/v2.md
       - manual/asciicast/v1.md
   - FAQ: faq.md
