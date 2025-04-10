@@ -16,16 +16,16 @@ Here's an overview of all available options for each configuration section.
 ; It can also be overriden by setting ASCIINEMA_SERVER_URL environment variable
 url = "https://asciinema.example.com"
 
-[cmd.rec]
+[recording]
 
 ; Command to record, default: $SHELL
 command = "/bin/bash -l"
 
 ; Enable input (keyboard) recording, default: false
-input = true
+rec_input = true
 
 ; List of environment variables to capture, default: SHELL,TERM
-env = "SHELL,TERM,USER"
+rec_env = "SHELL,TERM,USER"
 
 ; Limit recorded terminal inactivity to max n seconds, default: off
 idle_time_limit = 2
@@ -41,7 +41,7 @@ add_marker_key = "^x"
 ; be preceeded by it, default: no prefix
 prefix_key = "^a"
 
-[cmd.play]
+[playback]
 
 ; Playback speed (can be fractional), default: 1
 speed = 2
@@ -79,7 +79,7 @@ command = 'tmux display-message "$TEXT"'
 A minimal config file could look like this:
 
 ```toml
-[cmd.rec]
+[recording]
 idle_time_limit = 2
 ```
 
